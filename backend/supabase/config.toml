@@ -1,0 +1,72 @@
+# Supabase local/CLI configuration for PIZZA.
+# NOTE: written by hand; not yet validated with the Supabase CLI (`supabase start`).
+
+project_id = "pizza"
+
+[api]
+enabled = true
+port = 54321
+# Expose only the public schema through the REST API.
+schemas = ["public"]
+extra_search_path = ["public", "extensions"]
+max_rows = 1000
+
+[db]
+port = 54322
+# Match the major version of the hosted project (verify when creating it).
+major_version = 17
+
+[db.seed]
+enabled = true
+sql_paths = ["./seed.sql"]
+
+[auth]
+enabled = true
+site_url = "http://localhost:8080"
+additional_redirect_urls = ["http://localhost:8080"]
+jwt_expiry = 3600
+enable_refresh_token_rotation = true
+enable_signup = true
+# Local-first app: people start with an anonymous session and attach an email later.
+enable_anonymous_sign_ins = true
+
+[auth.email]
+enabled = true
+enable_confirmations = true
+double_confirm_changes = true
+# Six-digit codes: easy for older users, no password to remember.
+otp_length = 6
+otp_expiry = 3600
+
+# Show the six-digit code ({{ .Token }}) instead of a link: easier for older users.
+# NOTE: on a hosted project these templates must be set in the dashboard / config push.
+[auth.email.template.confirmation]
+subject = "Your PIZZA sign-up code"
+content_path = "./supabase/templates/confirmation.html"
+
+[auth.email.template.magic_link]
+subject = "Your PIZZA sign-in code"
+content_path = "./supabase/templates/magic_link.html"
+
+[auth.email.template.email_change]
+subject = "Your PIZZA email confirmation code"
+content_path = "./supabase/templates/email_change.html"
+
+[auth.rate_limit]
+anonymous_users = 30
+email_sent = 4
+
+[functions.sessions-batch]
+verify_jwt = true
+
+[functions.consents]
+verify_jwt = true
+
+[functions.delete-me]
+verify_jwt = true
+
+[functions.care-links]
+verify_jwt = true
+
+[functions.patient-summary]
+verify_jwt = true

@@ -1,0 +1,31 @@
+.DS_Store
+node_modules
+dist
+.vercel
+
+# --- local-only AI agent files (never push) ---
+AGENTS.md
+CLAUDE.md
+GEMINI.md
+.ai/
+.claude/
+.codex/
+.cursor/
+.cursorrules
+.windsurfrules
+.aider*
+.github/copilot-instructions.md
+
+# --- env / secrets ---
+.env
+.env.*
+!.env.example
+
+# --- misc ---
+*.log
+.vscode/
+Thumbs.db
+
+# --- supabase local state ---
+backend/supabase/.temp/
+backend/supabase/.branches/
